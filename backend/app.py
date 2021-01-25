@@ -11,7 +11,7 @@ app.config["DEBUG"] = True
 #----------Load model for questions answer----------
 model_questions_reponses=load_bert_model()
 fichier = load_file()
-#english_generator = load_english_generator()
+english_generator = load_english_generator()
 
 ##liste = generate_sentences_english_gpt2('bonjour',num_return_sequences=2)
 @app.route('/generate_sentences_english_gpt2',methods=['POST'])
@@ -21,7 +21,7 @@ def finish_sentences_english_gpt2():
     debut_phrase = req_data["phrase"]
     print("debut_phrase",debut_phrase,type(debut_phrase))
     
-    liste_reponses = generate_sentences_english_gpt2(debut_phrase,english_generator,num_return_sequences=4,length=40,top_p = 0.4)
+    liste_reponses = generate_sentences_english_gpt2(debut_phrase,english_generator,num_return_sequences=4,length=25,top_p = 0.4)
     
     #liste_reponse =  generate_sentences_english_gpt2(debut_phrase,num_return_sequences=3)
     json_string = json.dumps(liste_reponses,ensure_ascii=False)

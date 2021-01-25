@@ -15,51 +15,6 @@ labels = ["contradiction", "entailment", "neutral"]
 
 
 
-def create_model():
-  #strategy = tf.distribute.MirroredStrategy()
-
-  #with strategy.scope():
-      # Encoded token ids from BERT tokenizer.
-    input_ids = tf.keras.layers.Input(
-        shape=(max_length,), dtype=tf.int32, name="input_ids"
-    )
-    # Attention masks indicates to the model which tokens should be attended to.
-    attention_masks = tf.keras.layers.Input(
-        shape=(max_length,), dtype=tf.int32, name="attention_masks"
-    )
-    # Token type ids are binary masks identifying different sequences in the model.
-    token_type_ids = tf.keras.layers.Input(
-        shape=(max_length,), dtype=tf.int32, name="token_type_ids"
-    )
-        # Loading pretrained BERT model.
-
-    bert_model = transformers.TFBertModel.from_pretrained("bert-base-uncased")
-    # Freeze the BERT model to reuse the pretrained features without modifying them.
-    bert_model.trainable = False
-
-    sequence_output, pooled_output = bert_model(
-        input_ids, attention_mask=attention_masks, token_type_ids=token_type_ids
-    )
-    # Add trainable layers on top of frozen layers to adapt the pretrained features on the new data.
-    bi_lstm = tf.keras.layers.Bidirectional(
-        tf.keras.layers.LSTM(64, return_sequences=True)
-    )(sequence_output)
-    # Applying hybrid pooling approach to bi_lstm sequence output.
-    avg_pool = tf.keras.layers.GlobalAveragePooling1D()(bi_lstm)
-    max_pool = tf.keras.layers.GlobalMaxPooling1D()(bi_lstm)
-    concat = tf.keras.layers.concatenate([avg_pool, max_pool])
-    dropout = tf.keras.layers.Dropout(0.3)(concat)
-    output = tf.keras.layers.Dense(3, activation="softmax")(dropout)
-    modele = tf.keras.models.Model(
-        inputs=[input_ids, attention_masks, token_type_ids], outputs=output
-    )
-
-    modele.compile(
-        optimizer=tf.keras.optimizers.Adam(),
-        loss="categorical_crossentropy",
-        metrics=["acc"],
-    )
-    return modele
 
 class BertSemanticDataGenerator(tf.keras.utils.Sequence):
     """Generates batches of data.
@@ -84,7 +39,6 @@ class BertSemanticDataGenerator(tf.keras.utils.Sequence):
         batch_size=batch_size,
         shuffle=True,
         include_targets=True,
-        truncation = True
     ):
         self.sentence_pairs = sentence_pairs
         self.labels = labels
@@ -116,11 +70,10 @@ class BertSemanticDataGenerator(tf.keras.utils.Sequence):
             max_length=max_length,
             return_attention_mask=True,
             return_token_type_ids=True,
-            padding=True,
+            pad_to_max_length=True,
             return_tensors="tf",
-            truncation=True
         )
-        #print(encoded)
+
         # Convert batch of encoded features to numpy array.
         input_ids = np.array(encoded["input_ids"], dtype="int32")
         attention_masks = np.array(encoded["attention_mask"], dtype="int32")
@@ -137,6 +90,48 @@ class BertSemanticDataGenerator(tf.keras.utils.Sequence):
         # Shuffle indexes after each epoch if shuffle is set to True.
         if self.shuffle:
             np.random.RandomState(42).shuffle(self.indexes)
+
+def create_model():
+    input_ids = tf.keras.layers.Input(
+        shape=(max_length,), dtype=tf.int32, name="input_ids"
+    )
+    # Attention masks indicates to the model which tokens should be attended to.
+    attention_masks = tf.keras.layers.Input(
+        shape=(max_length,), dtype=tf.int32, name="attention_masks"
+    )
+    # Token type ids are binary masks identifying different sequences in the model.
+    token_type_ids = tf.keras.layers.Input(
+        shape=(max_length,), dtype=tf.int32, name="token_type_ids"
+    )
+    # Loading pretrained BERT model.
+    bert_model = transformers.TFBertModel.from_pretrained("bert-base-uncased")
+    # Freeze the BERT model to reuse the pretrained features without modifying them.
+    bert_model.trainable = False
+
+    sequence_output, pooled_output = bert_model(
+        input_ids, attention_mask=attention_masks, token_type_ids=token_type_ids
+    )
+    # Add trainable layers on top of frozen layers to adapt the pretrained features on the new data.
+    bi_lstm = tf.keras.layers.Bidirectional(
+        tf.keras.layers.LSTM(64, return_sequences=True)
+    )(sequence_output)
+    # Applying hybrid pooling approach to bi_lstm sequence output.
+    avg_pool = tf.keras.layers.GlobalAveragePooling1D()(bi_lstm)
+    max_pool = tf.keras.layers.GlobalMaxPooling1D()(bi_lstm)
+    concat = tf.keras.layers.concatenate([avg_pool, max_pool])
+    dropout = tf.keras.layers.Dropout(0.3)(concat)
+    output = tf.keras.layers.Dense(3, activation="softmax")(dropout)
+    model = tf.keras.models.Model(
+        inputs=[input_ids, attention_masks, token_type_ids], outputs=output
+    )
+
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(),
+        loss="categorical_crossentropy",
+        metrics=["acc"],
+    )
+    return model
+
 
 def check_similarity(sentence1, sentence2,model_question_answer):
     sentence_pairs = np.array([[str(sentence1), str(sentence2)]])
@@ -187,7 +182,7 @@ def translate(texte,src="en",dest="fr"):
 def generate_sentences_english_gpt2(debut_phrase,english_generator,num_return_sequences,length,top_p):
     debut_phrase = translate(debut_phrase,'fr',dest = 'en')
 
-    response_debut_phrase = english_generator(debut_phrase,num_return_sequences=num_return_sequences,max_length=length,top_p=top_p)
+    response_debut_phrase = english_generator(debut_phrase,num_return_sequences=num_return_sequences,max_length=length,top_p=top_p,top_k=30,do_sample=True)
     liste = []
     for res in response_debut_phrase:
         print("res",res)
@@ -213,10 +208,10 @@ def load_english_generator():
 
 #----------Load model for questions answer----------
 def load_bert_model():
-    model_question_answer = create_model()
+    model = create_model()
     path = "ml/modeles/bert-question-reponses/weights"
-    model_question_answer.load_weights(path)
-    return model_question_answer
+    model.load_weights(path)
+    return model
 
 def load_file():
     fichier = pd.read_csv("ml/dataset_questions_reponses.txt", sep=";")
