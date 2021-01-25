@@ -9,7 +9,7 @@ Here we explain how the application really work
 This is a simple example code-block::
 
     import math
-    print 'import done'
+    print 'oklm on est la'
 
 
 Guide

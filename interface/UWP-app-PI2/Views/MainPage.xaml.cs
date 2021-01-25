@@ -52,6 +52,9 @@ namespace Demoo.Views
         private ObservableCollection<String> finDePhrase = new ObservableCollection<String>();
         public ObservableCollection<String> FinDePhrase { get { return this.finDePhrase; } }
 
+        private ObservableCollection<String> topPhrases = new ObservableCollection<String>();
+        public ObservableCollection<String> TopPhrases { get { return this.topPhrases; } }
+
         private ObservableCollection<String> questionsReponses = new ObservableCollection<String>();
         public ObservableCollection<String> QuestionsReponses { get { return this.questionsReponses; } }
 
@@ -69,10 +72,15 @@ namespace Demoo.Views
         public MainPage()
         {
             this.InitializeComponent();
+            this.TopPhrases.Add("J'ai envie d'aller me balader.");
+            this.TopPhrases.Add("Tu peux appeler le médecin ?.");
+            this.TopPhrases.Add("Quel temps fait-il demain ?");
+            this.TopPhrases.Add("Qu'est-ce qu'on mange aujourd'hui ?");
+
         }
 
 
-        
+
 
         /// <summary>
         /// Permet de faire un appel à l'api flask python
@@ -162,17 +170,6 @@ namespace Demoo.Views
             {
                 DeleteFinDePhrase();
                 GetTextCallApi(TextInput, url_fin_phrases, 0);
-
-                /*using (var synthesizer = new Windows.Media.SpeechSynthesis.SpeechSynthesizer())
-                {
-                    synthesizer.Voice = SelectedVoice ?? Windows.Media.SpeechSynthesis.SpeechSynthesizer.DefaultVoice;
-
-                    var synStream = await synthesizer.SynthesizeTextToStreamAsync(TextInput);
-
-
-                    stream = synStream.AsStream();
-                    stream.Position = 0;
-                }*/
             }
             catch (Exception exception)
             {
@@ -180,6 +177,10 @@ namespace Demoo.Views
                 MessageDialog dlg = new MessageDialog(exceptionMessage);
                 await dlg.ShowAsync();
             }
+        }
+        private async void SpeakButton_Click(object sender, RoutedEventArgs e)
+        {
+            await SynthesizeAudioAsync(TextInput);
         }
         /// <summary>
         /// Quand l'utilisateur click sur le boutton speech to text, on récupère ce qui est dit à l'oral et on l'envoie à l'api
@@ -371,42 +372,20 @@ namespace Demoo.Views
                 await SynthesizeAudioAsync(val);
             }
         }
+        private async void TopPhrases_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CurrentlyAddingToListView == false)
+            {
+                string val = (sender as ListView).SelectedItem.ToString();
 
+                await SynthesizeAudioAsync(val);
+            }
+        }
 
 
         private async Task SynthesizeAudioAsync(string input)
         {
 
-            /* string subscriptionKey = "c06aeb4d93b24003a125aa2adef59aaa";
-             string region = "francecentral";
-             var config = SpeechConfig.FromSubscription(subscriptionKey, region);
-             using (var synthesizer = new SpeechSynthesizer(config))
-             {
-                 await synthesizer.SpeakTextAsync("Synthesizing directly to speaker output.");
-             }*/
-            /* try
-             {
-                 using (var synthesizer = new Windows.Media.SpeechSynthesis.SpeechSynthesizer())
-                 {
-
-                     //synthesizer.Voice = SelectedVoice ?? SpeechSynthesizer.DefaultVoice;
-
-                     var synStream = await synthesizer.SynthesizeTextToStreamAsync(test);
-
-                     //mPlayerElement.Source = MediaSource.CreateFromStream(synStream, synStream.ContentType);
-
-                     stream = synStream.AsStream();
-                     stream.Position = 0;
-
-                     var dlg = new MessageDialog("Conversion succeeded.", Package.Current.DisplayName);
-                     var cmd = await dlg.ShowAsync();
-                 }
-             }
-             catch (Exception exception)
-             {
-                 var dlg = new MessageDialog(exception.Message, Package.Current.DisplayName);
-                 var cmd = await dlg.ShowAsync();
-             }*/
             try
             {
                 using (var synthesizer = new Windows.Media.SpeechSynthesis.SpeechSynthesizer())
@@ -508,10 +487,10 @@ namespace Demoo.Views
             switch (type)
             {
                 case NotifyType.StatusMessage:
-                    StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+                    StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
                     break;
                 case NotifyType.ErrorMessage:
-                    StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Red);
+                    StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Transparent);
                     break;
             }
             StatusBlock.Text += string.IsNullOrEmpty(StatusBlock.Text) ? strMessage : "\n" + strMessage;

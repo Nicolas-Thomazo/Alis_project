@@ -19,105 +19,159 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2.5*"/>
-            <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="0,0,0,0"  >
-            <TextBlock x:Name="TitleTextBlock"
+        <TextBlock x:Name="TitleTextBlock"
                    Text="LIS Interface"
                    FontFamily="Calibri"
                    FontSize="40"
                    Foreground="DarkOrange"
-                   TextWrapping="Wrap" 
+                   TextWrapping="Wrap"
+                   Margin="-25,-10,0,0"
                   />
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <ComboBox x:Name="VoiceComboBox"
-                  ItemsSource="{x:Bind speech:SpeechSynthesizer.AllVoices,Mode=OneWay}"
+                  ItemsSource="{x:Bind Mode=OneWay, Path=speech:SpeechSynthesizer.AllVoices}"
                   ItemTemplate="{StaticResource VoiceDataTemplate}"
-                  SelectedItem="{x:Bind SelectedVoice,Mode=TwoWay}"
-                  PlaceholderText="Pick a voice" 
-                  FontFamily="Calibri"
+                  SelectedItem="{x:Bind Mode=TwoWay, Path=SelectedVoice}"
+                  PlaceholderText="Pick a voice"
+                  BorderBrush="White"
+                  FontFamily="Cambria Math"
                   FontSize="16"
-                  Width="200"
-                  Height="32"
-                  Margin="0,10,0,0"
+                  Width="135"
+                  Height="32" HorizontalAlignment="Center" Margin="0,82,0,0"
                  />
-        </StackPanel>
-
-        <StackPanel Grid.Column="2" Margin="1170,0,0,0">
-            <Button Name="ButtonSpeechtotext"
-                Content="SpeechToText"
-                Width="122" 
-                Click="SpeechRecognitionFromMicrophone_ButtonClicked"
-                RenderTransformOrigin="0.5,0.5"
-                Height="52"
+            <Button x:Name="ConvertButton"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="30"
+                Background="{x:Null}"
+                Content="&#xE725;"
+                Click="ConvertButton_Click"
+                Grid.Column="0" Margin="73,125,0,0" VerticalAlignment="Top"
                 />
-
-            <Button Name="ButtonEnroll"
-                Content="NewSpeaker"
-                Padding="15"
-                Click="VoiceRecognition" RenderTransformOrigin="0.5,0.5"
-                Width="122" Height="52"
-                Margin="0,10,0,0"
-               />
-            
-        </StackPanel>
-        <Button Margin="1300,30,0,0"
-                Name="SaveButton"
-                Content="Save as .wav"
-                Width="100"
-                Click="SaveButton_Click" Height="32"/>
-
-
-        <StackPanel Grid.Row ="2"  Margin="0,0">
+            <Button x:Name="SpeakButton"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="30"
+                Background="{x:Null}"
+                Content="&#xE720;"
+                Click="SpeakButton_Click"
+                Grid.Column="0" Margin="10,125,0,0" VerticalAlignment="Top"
+                />
             <TextBox x:Name="TextInputTextBox" 
-                 Text="{x:Bind TextInput,Mode=TwoWay}"
+                 Text="{x:Bind Mode=TwoWay, Path=TextInput}"
                  PlaceholderText="Enter Text"
                  AcceptsReturn="True"
-                 Width="1000"
-                 Height="100"
-                 Margin="0,0,0,0"/>
-            
-            <Button Name="ConvertButton"
-                Content="Convert"
-                Width="100"
-                Click="ConvertButton_Click" Height="32"/>
+                 Height="118"
+                 FontSize="20"
+                 Width="1142"
+                 
+                 Grid.Column="1"/>
+            <Button 
+                Name="SaveButton"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="50"
+                Background="{x:Null}"
+                Content="&#xE74E;"
+                Width="74"
+                Click="SaveButton_Click" Height="61"
+                Grid.Column="2" Margin="22,74,0,0" VerticalAlignment="Top"/>
+        </Grid>
+
+
+        <StackPanel x:Name="StatusPanel"  Grid.Row="1" Margin="0,10,0,75">
+            <Button x:Name="ButtonSpeechtotext"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="50"
+                Background="{x:Null}"
+                Content="&#xE939;"
+                Width="96" 
+                Click="SpeechRecognitionFromMicrophone_ButtonClicked"
+                RenderTransformOrigin="0.5,0.5"
+                Height="67"
+                HorizontalAlignment="Left" Margin="26,0,0,0" VerticalAlignment="Center"
+                />
+            <Border x:Name="StatusBorder" BorderBrush="Orange">
+                <TextBlock x:Name="StatusBlock" FontWeight="Medium" Height="304" Margin="28,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+            </Border>
+
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Margin="0,0,0,0">
+        <StackPanel Grid.Row="2" Margin="0,10,0,10" HorizontalAlignment="Stretch">
             <Grid Margin="0,40">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-           
-            <ListView ItemsSource="{x:Bind FinDePhrase}" IsItemClickEnabled="True" SelectionMode="Single"
+
+                <TextBlock x:Name="Title1"
+                   Text="Fin de phrases"
+                   FontFamily="Calibri"
+                   FontSize="20"
+                   Foreground="White"
+                   FontWeight="Bold"
+                   TextWrapping="Wrap"
+                   Grid.Column="0"
+                   
+                  />
+                <ListView ItemsSource="{x:Bind FinDePhrase}" IsItemClickEnabled="True" SelectionMode="Single"
                       SelectionChanged="FinDePhrases_SelectionChanged"
                       Width="700"
                       Grid.Column="0"
+                      Grid.Row="1"
+                      Margin="0,10"
                       />
+                <TextBlock x:Name="Title2"
+                   Text="Top phrases"
+                   FontFamily="Calibri"
+                   FontSize="20"
+                   Foreground="white"
+                   FontWeight="Bold"
+                   TextWrapping="Wrap"
+                   Grid.Column="1"
+                  
+                  />
+                <ListView x:Name="Fruits" ItemsSource="{x:Bind TopPhrases}" IsItemClickEnabled="True" SelectionMode="Single"  Grid.Row="1"
+                      SelectionChanged="TopPhrases_SelectionChanged" Grid.Column="1" Margin="0,10">
+                </ListView>
 
-            <ListView ItemsSource="{x:Bind QuestionsReponses}" IsItemClickEnabled="True" SelectionMode="Single"
-                   SelectionChanged="QuestionsReponses_SelectionChanged"
+                <TextBlock x:Name="Title3"
+                   Text="Réponses automatiques"
+                   FontFamily="Calibri"
+                   FontSize="20"
+                   Foreground="white"
+                   TextWrapping="Wrap"
+                   Grid.Column="2"
+                   FontWeight="Bold"
+                  />
+                <ListView ItemsSource="{x:Bind QuestionsReponses}" IsItemClickEnabled="True" SelectionMode="Single"
+                   SelectionChanged="QuestionsReponses_SelectionChanged"  Grid.Row="1" Margin="0,10"
                   Width="600"
-                  Grid.Column="1"
+                  Grid.Column="2"
                  />
             </Grid>
         </StackPanel>
-
-
-
         <MediaPlayerElement x:Name="mPlayerElement"
                             Height="100"
                             AutoPlay="True"
                             AreTransportControlsEnabled="True"
-                            Grid.Row="3" >
+                            Grid.Row="3"
+                            Margin="0,-200">
             <MediaPlayerElement.TransportControls>
                 <MediaTransportControls IsStopButtonVisible="True"
                                         IsStopEnabled="True"
@@ -127,20 +181,6 @@
                                         IsZoomButtonVisible="False"/>
             </MediaPlayerElement.TransportControls>
         </MediaPlayerElement>
-
-
-
-        <StackPanel x:Name="StatusPanel"  Grid.Row="3" Grid.Column="1" Margin="0,-50">
-            <Border x:Name="StatusBorder" >
-                <ScrollViewer VerticalScrollMode="Auto"  VerticalScrollBarVisibility="Auto" MaxHeight="200">
-                    <!-- Use LiveSetting to enable screen readers to announce the status update. -->
-                    <TextBlock x:Name="StatusBlock" FontWeight="Bold" AutomationProperties.LiveSetting="Assertive"
-                        MaxWidth="{Binding ElementName=Splitter, Path=ActualWidth}"  TextWrapping="Wrap"  />
-                </ScrollViewer>
-            </Border>
-            <TextBlock x:Name="StatusLabel"  TextWrapping="Wrap" Text="Status:" FontSize="20"/>
-        </StackPanel>
-        
 
     </Grid>
 </Page>

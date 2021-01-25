@@ -7,7 +7,6 @@
     <RootPropertyPathName Name="Width" />
     <RootPropertyPathName Name="Height" />
     <RootPropertyPathName Name="DisplayName" />
-    <RootPropertyPathName Name="ActualWidth" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Caliburn.Micro.CaliburnApplication">
@@ -29,13 +28,17 @@
       <RootProperty Name="IsEnabled" />
       <RootProperty Name="Style" />
       <RootProperty Name="Visibility" />
-      <RootProperty Name="Name" />
-      <RootProperty Name="Margin" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Background" />
       <RootProperty Name="Content" />
       <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
       <RootProperty Name="RenderTransformOrigin" />
-      <RootProperty Name="Padding" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Name" />
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
@@ -140,8 +143,6 @@
       <RootMethod Name="SetAccessibilityView" />
       <RootMethod Name="GetName" />
       <RootMethod Name="SetName" />
-      <RootMethod Name="GetLiveSetting" />
-      <RootMethod Name="SetLiveSetting" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.TemplateBindingExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.CaptureElement">
@@ -160,12 +161,13 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="Style" />
       <RootProperty Name="Text" />
-      <RootProperty Name="MaxWidth" />
       <RootProperty Name="FontFamily" />
+      <RootProperty Name="Height" />
       <RootProperty Name="TextAlignment" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.BindExtension">
       <RootProperty Name="Mode" />
+      <RootProperty Name="Path" />
       <RootProperty Name="Converter" />
       <RootProperty Name="ConverterParameter" />
     </RootType>
@@ -221,11 +223,10 @@
       <RootProperty Name="HorizontalScrollBarVisibility" />
       <RootProperty Name="Background" />
       <RootProperty Name="ZoomMode" />
-      <RootProperty Name="VerticalScrollMode" />
-      <RootProperty Name="MaxHeight" />
       <RootProperty Name="Name" />
       <RootProperty Name="Padding" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalScrollMode" />
       <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
@@ -355,12 +356,10 @@
       <RootProperty Name="Height" />
       <RootProperty Name="AutoPlay" />
       <RootProperty Name="AreTransportControlsEnabled" />
+      <RootProperty Name="Margin" />
       <RootProperty Name="TransportControls" />
       <RootProperty Name="PosterSource" />
       <RootProperty Name="Source" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Border">
-      <RootProperty Name="Child" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.MediaTransportControls">
       <RootProperty Name="IsStopButtonVisible" />
@@ -376,26 +375,34 @@
       <RootProperty Name="IsItemClickEnabled" />
       <RootProperty Name="SelectionMode" />
       <RootProperty Name="Width" />
+      <RootProperty Name="Margin" />
       <RootEvent Name="SelectionChanged" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
-      <RootProperty Name="Text" />
-      <RootProperty Name="PlaceholderText" />
-      <RootProperty Name="AcceptsReturn" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="Height" />
-      <RootProperty Name="Margin" />
+    <RootType FullName="Windows.UI.Xaml.Controls.Border">
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="Child" />
     </RootType>
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.NullExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
       <RootProperty Name="ItemsSource" />
       <RootProperty Name="ItemTemplate" />
       <RootProperty Name="SelectedItem" />
       <RootProperty Name="PlaceholderText" />
+      <RootProperty Name="BorderBrush" />
       <RootProperty Name="FontFamily" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="Width" />
       <RootProperty Name="Height" />
+      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
+      <RootProperty Name="Text" />
+      <RootProperty Name="PlaceholderText" />
+      <RootProperty Name="AcceptsReturn" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Width" />
     </RootType>
     <RootType FullName="Demoo.Views.MainPage" />
     <RootType FullName="Demoo.Views.MasterDetailDetail.DetailsView" />
@@ -466,7 +473,6 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Frame">
       <RootProperty Name="DataContext" />
     </RootType>
-    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.NullExtension" />
     <RootType FullName="Demoo.Views.ShellPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.WebView">
       <RootProperty Name="Source" />
