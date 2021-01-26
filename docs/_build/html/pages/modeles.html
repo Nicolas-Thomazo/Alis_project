@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modèles développés &#8212; ALIS 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="interface" href="interface.html" />
+    <link rel="prev" title="Flask api" href="flask.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="modeles-developpes">
+<h1>Modèles développés<a class="headerlink" href="#modeles-developpes" title="Permalink to this headline">¶</a></h1>
+<p>Il existe 3 modèles différents que nous avons utilisés.
+Dans le dossier entrainements_modeles, vous pourrez trouver des notebook jupyter qui permettent de ré-entrainer ces modèles pour qu’ils soient plus performants.</p>
+<div class="section" id="generation-de-texte">
+<h2>Génération de texte<a class="headerlink" href="#generation-de-texte" title="Permalink to this headline">¶</a></h2>
+<p>Nous nous sommes donc concentrés sur GPT-2. Il a cependant été uniquement entraîné en anglais. Nous avions donc 2 possibilités.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Solution 1</dt><dd><p>La première possibilité est de traduire le début de la phrase écrite par la personne LIS, puis de la donner au modèle afin qu’il génère une fin de phrase logique. Il faut ensuite re-traduire la fin de phrase et l’afficher sur l’interface. Cette solution à l’avantage d’utiliser le modèle GPT-2 tel quel, qui est l’un des meilleurs pour la prédiction. En revanche, il introduit des biais à cause de la double traduction anglais/français.
+Nous avons utilisé pour la traduction une API gratuite, il y a cependant la possibilité d’utiliser l’API payante de Deepl qui est très utilisée et fait de très bonnes traductions.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Solution 2</dt><dd><p>La seconde possibilité est de “fine-tune” le modèle anglais pour qu’il puisse prédire en français. Il faut donc lui “apprendre” le français en lui donnant de nombreux textes écrits en français. L’avantage de cette solution est que le modèle créé ne possède plus le biais dû à la traduction.   C’est en revanche une tâche fastidieuse qui nécessite de nombreux textes en français ( plusieurs giga de données) et une puissance informatique conséquente. Nous avons utilisé les sous-titres de films car ils sont censés être représentatifs de la réalité. Nous avons pris les 10 saisons de la série « Friends », mais ces données ne représentaient que 5 Mo de discussion.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="reponses-aux-questions">
+<h2>Réponses aux questions<a class="headerlink" href="#reponses-aux-questions" title="Permalink to this headline">¶</a></h2>
+<p>La phrase est prise en compte dans le JSON envoyé par l’application. Elle est ensuite traduite en anglais. Puis, le calcul de similarité est effectué pour chaque phrase qui compose le dataset avec la phrase issue de l’application. Le programme choisit les phrases qui ont le plus de similarité avec celles posées et les envoie par la suite pour répondre à l’appel de l’application.</p>
+<p><strong>Points importants</strong></p>
+<p>Le modèle de réponse aux questions a été entrainé avec Bert. C’est un modèle qui est lourd et qui prends beaucoup de temps à tourner.
+2 axes d’améliorations.</p>
+<ul class="simple">
+<li><p>Entrainer avec un modèle plus léger comme <em>distilBert</em></p></li>
+<li><p>Changer la taille des tokens en entrée</p></li>
+</ul>
+<p>Concernant gpt-2, la meilleur solution serait de continuer à fine-tune le modèle français. Pour cela il faut 2 choses</p>
+<ul class="simple">
+<li><p>Utiliser une machine puissante (sur azure par exemple) qui utilise un GPU. Colab arrête la session au bout d’un certains temps ce n’est donc pas le meilleur environment.</p></li>
+<li><p>Récuperer d’auter sous-titres de films pour entrainer le modèle sur plus de données. L’objectif sera d’entrainer le modèle sur les phrases dites par la personne LIS.</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ALIS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="flask.html">Flask api</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modèles développés</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generation-de-texte">Génération de texte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reponses-aux-questions">Réponses aux questions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interface.html">interface</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="flask.html" title="previous chapter">Flask api</a></li>
+      <li>Next: <a href="interface.html" title="next chapter">interface</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Léa Youssef Agathe Soubiran Lisa Pauwels Guilhem Maillebuau Nicolas Thomazo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/modeles.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
