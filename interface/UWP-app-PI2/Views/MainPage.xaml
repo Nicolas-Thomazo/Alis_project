@@ -110,7 +110,7 @@
         <StackPanel Grid.Row="2" Margin="0,10,0,10" HorizontalAlignment="Stretch">
             <Grid Margin="0,40">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.2*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -127,6 +127,7 @@
                    FontWeight="Bold"
                    TextWrapping="Wrap"
                    Grid.Column="0"
+                   Margin="100,0"
                    
                   />
                 <ListView ItemsSource="{x:Bind FinDePhrase}" IsItemClickEnabled="True" SelectionMode="Single"
@@ -144,7 +145,7 @@
                    FontWeight="Bold"
                    TextWrapping="Wrap"
                    Grid.Column="1"
-                  
+                  Margin="100,0"
                   />
                 <ListView x:Name="Fruits" ItemsSource="{x:Bind TopPhrases}" IsItemClickEnabled="True" SelectionMode="Single"  Grid.Row="1"
                       SelectionChanged="TopPhrases_SelectionChanged" Grid.Column="1" Margin="0,10">
@@ -158,6 +159,7 @@
                    TextWrapping="Wrap"
                    Grid.Column="2"
                    FontWeight="Bold"
+                   Margin="100,0"
                   />
                 <ListView ItemsSource="{x:Bind QuestionsReponses}" IsItemClickEnabled="True" SelectionMode="Single"
                    SelectionChanged="QuestionsReponses_SelectionChanged"  Grid.Row="1" Margin="0,10"

@@ -1,9 +1,9 @@
 {   "acces":
         {"trottin":{
-            "speech_key":"1c514fb1fea2465a882f0fae12242cc0",
+            "speech_key":"",
             "service_region":"francecentral"}, 
         "personnel":    {
-            "speech_key":"9c1d17b3887543978fd5ed4dda77dda0",
+            "speech_key":"",
             "service_region":"westeurope"}
         },
     "api":
@@ -12,18 +12,18 @@
             "city":"Paris",
             "time":
                 {
-                "key":"1V41S37BHZ1Z"
+                "key":""
                 },
             "weather":
                 {
-                "key":"4c218dc49db1895d6922053cd0aa29c5"
+                "key":""
                 }
         },
     "database":
         {
             "host":"localhost",
             "user":"root",
-            "password":"Football26",
+            "password":"",
             "db":"historique"
         }
 }

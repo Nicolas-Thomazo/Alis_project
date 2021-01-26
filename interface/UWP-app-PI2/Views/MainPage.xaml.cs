@@ -72,8 +72,8 @@ namespace Demoo.Views
         public MainPage()
         {
             this.InitializeComponent();
-            this.TopPhrases.Add("J'ai envie d'aller me balader.");
-            this.TopPhrases.Add("Tu peux appeler le médecin ?.");
+            this.TopPhrases.Add("J'ai passé une super journée.");
+            this.TopPhrases.Add("Tu peux appeler le médecin ?");
             this.TopPhrases.Add("Quel temps fait-il demain ?");
             this.TopPhrases.Add("Qu'est-ce qu'on mange aujourd'hui ?");
 

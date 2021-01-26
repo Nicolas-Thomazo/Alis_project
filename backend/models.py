@@ -10,8 +10,10 @@ from google_trans_new import google_translator
 max_length = 32  # Maximum length of input sentence to the model.
 batch_size = 32
 epochs = 2
+
 # Labels in our dataset.
-labels = ["contradiction", "entailment", "neutral"] 
+labels = ["contradiction", "entailment", "neutral"]
+
 
 
 
@@ -39,6 +41,7 @@ class BertSemanticDataGenerator(tf.keras.utils.Sequence):
         batch_size=batch_size,
         shuffle=True,
         include_targets=True,
+        truncation = True
     ):
         self.sentence_pairs = sentence_pairs
         self.labels = labels
@@ -72,8 +75,9 @@ class BertSemanticDataGenerator(tf.keras.utils.Sequence):
             return_token_type_ids=True,
             pad_to_max_length=True,
             return_tensors="tf",
+            truncation=True
         )
-
+        #print(encoded)
         # Convert batch of encoded features to numpy array.
         input_ids = np.array(encoded["input_ids"], dtype="int32")
         attention_masks = np.array(encoded["attention_mask"], dtype="int32")
@@ -92,6 +96,10 @@ class BertSemanticDataGenerator(tf.keras.utils.Sequence):
             np.random.RandomState(42).shuffle(self.indexes)
 
 def create_model():
+  #strategy = tf.distribute.MirroredStrategy()
+
+  #with strategy.scope():
+      # Encoded token ids from BERT tokenizer.
     input_ids = tf.keras.layers.Input(
         shape=(max_length,), dtype=tf.int32, name="input_ids"
     )
@@ -103,7 +111,8 @@ def create_model():
     token_type_ids = tf.keras.layers.Input(
         shape=(max_length,), dtype=tf.int32, name="token_type_ids"
     )
-    # Loading pretrained BERT model.
+        # Loading pretrained BERT model.
+
     bert_model = transformers.TFBertModel.from_pretrained("bert-base-uncased")
     # Freeze the BERT model to reuse the pretrained features without modifying them.
     bert_model.trainable = False
@@ -182,7 +191,7 @@ def translate(texte,src="en",dest="fr"):
 def generate_sentences_english_gpt2(debut_phrase,english_generator,num_return_sequences,length,top_p):
     debut_phrase = translate(debut_phrase,'fr',dest = 'en')
 
-    response_debut_phrase = english_generator(debut_phrase,num_return_sequences=num_return_sequences,max_length=length,top_p=top_p,top_k=30,do_sample=True)
+    response_debut_phrase = english_generator(debut_phrase,num_return_sequences=num_return_sequences,max_length=length,top_p=top_p,top_k=15,do_sample=True)
     liste = []
     for res in response_debut_phrase:
         print("res",res)
