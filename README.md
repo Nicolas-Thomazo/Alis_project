@@ -1,8 +1,8 @@
 # Code du projet
 
-[Documentation] https://alis-documentation.readthedocs.io/en/latest/
+[Documentation de note projet](https://alis-documentation.readthedocs.io/en/latest/)
 
-[Présentation vidéo de notre projet] (https://youtu.be/H3h23GPTckI)
+[Présentation vidéo de notre projet](https://youtu.be/H3h23GPTckI)
 
 ## introduction
 
