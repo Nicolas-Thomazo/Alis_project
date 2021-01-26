@@ -1,11 +1,15 @@
 # Code du projet
 
+[Documentation] https://alis-documentation.readthedocs.io/en/latest/
+
+[Présentation vidéo de notre projet] (https://youtu.be/H3h23GPTckI)
+
 ## introduction
 
 L’objectif de ce projet est de créer une interface permettant aux personnes LIS de communiquer. Les personnes LIS sont atteintes, à la suite d’un accident vasculaire cérébral, d’un handicap moteur. Ce handicap entraîne une tétraplégie et une incapacité à communiquer verbalement. Leur unique moyen de communication est le mouvement oculaire et le clignement des yeux. Les solutions existantes étant trop lentes, notre solution se doit d’être plus rapide afin de fluidifier la communication. Microsoft souhaite donc apporter son expertise en Intelligence Artificielle afin de créer une solution intelligente qui génère du contenu conversationnel.
 
 
-[Présentation vidéo de notre projet] (https://youtu.be/H3h23GPTckI)
+
 
 ## Lancer le projet
 
