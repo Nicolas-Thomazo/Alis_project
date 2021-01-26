@@ -12,7 +12,6 @@ L’objectif de ce projet est de créer une interface permettant aux personnes L
 Après avoir cloné le projet, il faut avoir python et lancer la commande ci-dessous pour installer les librairies requises.
 ```
 pip install requirements.txt
-
 ```
 Il faut ensuite avoir visual studio et lancer le projet qui se trouve dans la partie interface.
 
@@ -24,6 +23,8 @@ Notre interface UWP (Universal Windows Platform) présente les deux sous-parties
 Demoo.core correspond aux fonctionnalités Microsoft possibles dans une application UWP (gestion des photos, prendre des photos, gérer les paramètres de l’application, webView, mediaPlayer).                                               	   
 UWP-app-pi2 correspond quant à lui aux fonctionnalités propres à l’application, c'est-à-dire Speech-to-text, text-to-speech, affichage de l’aide prédictive, etc.  	  
 
+
+Voici à quoi ressemble notre interface
 ![Application](docs/img/uwp.png)
 
 

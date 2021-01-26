@@ -2,4 +2,5 @@
 *.bin
 *.index
 *.data-00000-of-00001
+*.vscode
 backend/ml/modeles/bert-question-reponses/checkpoint
