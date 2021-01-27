@@ -12,9 +12,11 @@ Get-started
 
 Après avoir cloné le projet, il faut avoir python et lancer la commande ci-dessous pour installer les librairies requises.::
 
-   pip install requirements.txt
+   pip install -r requirements.txt
 
-Il faut ensuite avoir visual studio et lancer le projet qui se trouve dans la partie interface.
+Pour lancer l'interface visual studio est nécessaire.
+Il faut ensuite aller dans le folder interface/UWP-app-PI2 et lancer le fichier Demoo.sln
+Une fois le fichier lancé vous pouvez déployer le programme et le lancer.
 
 .. toctree::
    :maxdepth: 2

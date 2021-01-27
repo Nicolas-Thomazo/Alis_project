@@ -8,10 +8,13 @@ from models import generate_sentences_english_gpt2,generate_sentences_french_gpt
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
+#import tensorflow as tf
+#print(tf.__version__)
+
 #----------Load model for questions answer----------
 model_questions_reponses=load_bert_model()
 fichier = load_file()
-english_generator = load_english_generator()
+#english_generator = load_english_generator()
 
 ##liste = generate_sentences_english_gpt2('bonjour',num_return_sequences=2)
 @app.route('/generate_sentences_english_gpt2',methods=['POST'])

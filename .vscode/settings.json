@@ -1,3 +1,4 @@
 {
-    "restructuredtext.confPath": "${workspaceFolder}\\docs"
+    "restructuredtext.confPath": "${workspaceFolder}\\docs",
+    "python.pythonPath": "c:\\Users\\nicol\\Documents\\ESILV\\ESILV-A5\\FINAL\\alis_env\\Scripts\\python.exe"
 }
